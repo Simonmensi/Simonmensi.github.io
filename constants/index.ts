@@ -110,8 +110,8 @@ export interface NavLink {
 export const NAV_LINKS: NavLink[] = [
   { label: "Home",       href: ROUTES.home },
   { label: "Projects",   href: ROUTES.projects },
+  { label: "CV",         href: ROUTES.cv },
   { label: "Guidelines", href: ROUTES.guidelines },
-  { label: "CV",         href: CV_PDF_PATH,      external: true },
   { label: "Contact",    href: ROUTES.contact,   cta: true },
 ];
 
