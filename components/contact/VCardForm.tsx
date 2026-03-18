@@ -46,7 +46,7 @@ export interface Props {
  * @param values - Current {@link FormValues}.
  * @returns A {@link FormErrors} object — empty when all fields are valid.
  */
-function validate(values: FormValues): FormErrors {
+export function validate(values: FormValues): FormErrors {
   const errors: FormErrors = {};
   if (!values.name.trim()) {
     errors.name = "Name is required.";
