@@ -58,7 +58,7 @@ interface HeroSectionProps {
  */
 function HeroSection({ title, subtitle, ctaLabel, ctaHref }: HeroSectionProps) {
   return (
-    <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden">
+    <section className="relative flex min-h-screen flex-col items-center justify-center pb-[30vh] overflow-hidden">
       {/* Background layer 1 — solid blue-900 (top 40%) */}
       <div
         aria-hidden="true"
