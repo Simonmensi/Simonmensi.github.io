@@ -3,6 +3,8 @@
  * @description Home page — tri-layer hero section for Simon Mensi's portfolio.
  */
 
+import { Button } from "@/components/ui/Button";
+
 /**
  * Props for the HeroSection component.
  */
@@ -69,12 +71,14 @@ function HeroSection({ title, subtitle, ctaLabel, ctaHref }: HeroSectionProps) {
         <p className="text-lg font-medium text-blue-100 sm:text-xl md:text-2xl">
           {subtitle}
         </p>
-        <a
+        <Button
           href={ctaHref}
-          className="mt-4 inline-block rounded-full bg-white px-8 py-3 text-base font-semibold text-blue-900 shadow-md transition-colors hover:bg-blue-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-blue-900 sm:text-lg"
+          variant="outline"
+          size="md"
+          className="mt-4 border-white text-white hover:bg-white hover:text-blue-900 focus-visible:ring-white focus-visible:ring-offset-blue-900"
         >
           {ctaLabel}
-        </a>
+        </Button>
       </div>
     </section>
   );
