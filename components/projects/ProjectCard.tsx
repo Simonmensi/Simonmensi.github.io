@@ -7,7 +7,7 @@
 
 import { Tag } from "@/components/ui/Tag";
 import { Button } from "@/components/ui/Button";
-import type { ProjectEntry, ProjectStatus } from "@/data/projects";
+import type { ProjectEntry, ProjectStatus, ProjectType } from "@/data/projects";
 
 /**
  * Props for the {@link ProjectCard} component.
@@ -24,7 +24,17 @@ const STATUS_VARIANT: Record<ProjectStatus, "success" | "info" | "warning"> = {
   archived: "warning",
 };
 
-/** Human-readable label for each {@link ProjectStatus}. */
+/** Maps a {@link ProjectType} to a {@link Tag} variant. */
+const TYPE_VARIANT: Record<ProjectType, "success" | "warning"> = {
+  personal: "success",
+  group: "warning",
+};
+
+/** Human-readable label for each {@link ProjectType}. */
+const TYPE_LABEL: Record<ProjectType, string> = {
+  personal: "Personal Project",
+  group: "Group Project",
+};
 const STATUS_LABEL: Record<ProjectStatus, string> = {
   active: "Active",
   completed: "Completed",
@@ -41,19 +51,22 @@ const STATUS_LABEL: Record<ProjectStatus, string> = {
  * <ProjectCard project={PROJECTS[0]} />
  */
 export function ProjectCard({ project }: Props) {
-  const { title, description, stack, status, liveUrl, repoUrl, date } =
+  const { title, description, stack, status, projectType, liveUrl, repoUrl, date } =
     project;
 
   return (
     <article className="flex flex-col gap-4 rounded-2xl border border-blue-900/10 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
-      {/* Header row */}
+      {/* Header row: title + status badge */}
       <div className="flex flex-wrap items-start justify-between gap-2">
         <h2 className="text-xl font-bold text-blue-900">{title}</h2>
         <Tag variant={STATUS_VARIANT[status]}>{STATUS_LABEL[status]}</Tag>
       </div>
 
-      {/* Date */}
-      <p className="text-xs text-blue-900/50">{date}</p>
+      {/* Project type badge + date */}
+      <div className="flex flex-wrap items-center gap-2">
+        <Tag variant={TYPE_VARIANT[projectType]}>{TYPE_LABEL[projectType]}</Tag>
+        <span className="text-xs text-blue-900/50">{date}</span>
+      </div>
 
       {/* Description */}
       <p className="flex-1 text-sm leading-relaxed text-blue-900/70">
