@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { LayoutShell } from "@/components/layout/LayoutShell";
+import { SITE_TITLE, SITE_DESCRIPTION } from "@/constants";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -14,9 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Simon Lei — System Analyst",
-  description:
-    "Personal portfolio of Simon Lei, System Analyst at NUS-ISS. Projects, CV, and contact.",
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
 };
 
 export default function RootLayout({

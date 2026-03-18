@@ -4,6 +4,7 @@
  */
 
 import Link from "next/link";
+import { OWNER_NAME, ROUTES, CV_PDF_PATH } from "@/constants";
 
 /**
  * Props for the {@link Footer} component.
@@ -11,7 +12,7 @@ import Link from "next/link";
 export interface Props {
   /**
    * Override the copyright name displayed in the footer.
-   * @defaultValue `"Simon Mensi"`
+   * @defaultValue {@link OWNER_NAME}
    */
   ownerName?: string;
 }
@@ -34,7 +35,7 @@ export interface Props {
  * // Custom owner name
  * <Footer ownerName="Acme Corp" />
  */
-export function Footer({ ownerName = "Simon Mensi" }: Props) {
+export function Footer({ ownerName = OWNER_NAME }: Props) {
   const year = new Date().getFullYear();
 
   return (
@@ -49,27 +50,27 @@ export function Footer({ ownerName = "Simon Mensi" }: Props) {
         <nav aria-label="Footer navigation">
           <ul className="flex flex-wrap items-center justify-center gap-6" role="list">
             <li>
-              <Link href="/" className="text-sm text-blue-900/50 transition-colors hover:text-blue-900">
+              <Link href={ROUTES.home} className="text-sm text-blue-900/50 transition-colors hover:text-blue-900">
                 Home
               </Link>
             </li>
             <li>
-              <Link href="/projects" className="text-sm text-blue-900/50 transition-colors hover:text-blue-900">
+              <Link href={ROUTES.projects} className="text-sm text-blue-900/50 transition-colors hover:text-blue-900">
                 Projects
               </Link>
             </li>
             <li>
-              <Link href="/guidelines" className="text-sm text-blue-900/50 transition-colors hover:text-blue-900">
+              <Link href={ROUTES.guidelines} className="text-sm text-blue-900/50 transition-colors hover:text-blue-900">
                 Guidelines
               </Link>
             </li>
             <li>
-              <a href="/simon-mensi-cv.pdf" target="_blank" rel="noopener noreferrer" className="text-sm text-blue-900/50 transition-colors hover:text-blue-900">
+              <a href={CV_PDF_PATH} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-900/50 transition-colors hover:text-blue-900">
                 CV
               </a>
             </li>
             <li>
-              <Link href="/contact" className="text-sm text-blue-900/50 transition-colors hover:text-blue-900">
+              <Link href={ROUTES.contact} className="text-sm text-blue-900/50 transition-colors hover:text-blue-900">
                 Contact
               </Link>
             </li>
