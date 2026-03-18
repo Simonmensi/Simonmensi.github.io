@@ -14,9 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Simon Mensi — System Analyst",
+  title: "Simon Lei — System Analyst",
   description:
-    "Personal portfolio of Simon Mensi, System Analyst. Projects, CV, and contact.",
+    "Personal portfolio of Simon Lei, System Analyst at NUS-ISS. Projects, CV, and contact.",
 };
 
 export default function RootLayout({
