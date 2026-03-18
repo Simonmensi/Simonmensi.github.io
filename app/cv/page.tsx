@@ -1,139 +1,201 @@
 /**
  * @file app/cv/page.tsx
- * @description CV page — renders Simon Lei's full curriculum vitae from
- * the typed {@link CV} data object in `data/cv.ts`. Presented as a
- * timeline-style layout with experience, education, and skill sections.
+ * @description CV page — renders Lei Nuozhen's full curriculum vitae from
+ * `data/cv.ts`, matching the PDF exactly. Sections: Professional Profile,
+ * Education, Technical Skills, Certificates & Awards, Projects, Work
+ * Experience, Achievements, Other Information.
  */
 
 import type { Metadata } from "next";
 import { CV } from "@/data/cv";
 import { Tag } from "@/components/ui/Tag";
 import { Button } from "@/components/ui/Button";
-import { OWNER_NAME, SITE_URL, CV_PDF_PATH } from "@/constants";
+import { SITE_URL, CV_PDF_PATH } from "@/constants";
 
 export const metadata: Metadata = {
-  title: `CV — ${OWNER_NAME}`,
-  description: `Curriculum vitae of ${OWNER_NAME} — ${CV.title}.`,
+  title: `CV — ${CV.name}`,
+  description: `Curriculum vitae of ${CV.name} — Systems Analyst & Data Science practitioner.`,
   alternates: { canonical: `${SITE_URL}/cv/` },
   openGraph: {
-    title: `CV — ${OWNER_NAME}`,
-    description: `Curriculum vitae of ${OWNER_NAME} — ${CV.title}.`,
+    title: `CV — ${CV.name}`,
+    description: `Curriculum vitae of ${CV.name}.`,
     url: `${SITE_URL}/cv/`,
     type: "website",
   },
 };
 
+// ─── Shared primitives ───────────────────────────────────────
+
+/** Section wrapper with a bold heading and ruled divider. */
+function Section({ id, heading, children }: { id: string; heading: string; children: React.ReactNode }) {
+  return (
+    <section aria-labelledby={id} className="mb-10">
+      <h2 id={id} className="mb-1 text-base font-extrabold uppercase tracking-widest text-blue-900">
+        {heading}
+      </h2>
+      <hr className="mb-4 border-blue-900" />
+      {children}
+    </section>
+  );
+}
+
+/** Bullet list shared across experience, projects, achievements. */
+function BulletList({ bullets }: { bullets: string[] }) {
+  return (
+    <ul className="mt-2 space-y-1">
+      {bullets.map((b, i) => (
+        <li key={i} className="flex gap-2 text-sm text-blue-900/75">
+          <span aria-hidden="true" className="mt-[6px] size-[5px] shrink-0 rounded-full bg-blue-900/50" />
+          {b}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+// ─── Page ────────────────────────────────────────────────────
+
 /**
- * CV page — static render of the full curriculum vitae.
+ * CV page — static render matching the PDF exactly.
  *
- * @returns A `<main>` element with experience timeline, education, and skills.
+ * @returns A `<main>` element with all CV sections.
  */
 export default function CvPage() {
   return (
     <main className="mx-auto max-w-3xl px-6 py-16">
-      {/* Page header */}
-      <header className="mb-12 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h1 className="text-4xl font-bold text-blue-900">{CV.name}</h1>
-          <p className="mt-1 text-lg text-blue-900/60">{CV.title}</p>
+
+      {/* ── Header ── */}
+      <header className="mb-10 text-center">
+        <h1 className="text-3xl font-extrabold uppercase tracking-widest text-blue-900">
+          {CV.name}
+        </h1>
+        <p className="mt-2 text-sm text-blue-900/60">
+          Email:{" "}
+          <a href={`mailto:${CV.email}`} className="underline hover:text-blue-900">
+            {CV.email}
+          </a>
+          {"  "}Phone: {CV.phone}
+        </p>
+        <div className="mt-4">
+          <Button href={CV_PDF_PATH} variant="outline" size="sm">
+            Download PDF
+          </Button>
         </div>
-        <Button href={CV_PDF_PATH} variant="outline" size="sm">
-          Download PDF
-        </Button>
       </header>
 
-      {/* Summary */}
-      <section aria-labelledby="summary-heading" className="mb-12">
-        <h2 id="summary-heading" className="mb-3 text-xl font-semibold text-blue-900">
-          Summary
-        </h2>
-        <p className="text-blue-900/70 leading-relaxed">{CV.summary}</p>
-      </section>
+      {/* ── Professional Profile ── */}
+      <Section id="cv-profile" heading="Professional Profile">
+        <p className="text-sm leading-relaxed text-blue-900/75">{CV.summary}</p>
+      </Section>
 
-      {/* Experience */}
-      <section aria-labelledby="experience-heading" className="mb-12">
-        <h2 id="experience-heading" className="mb-6 text-xl font-semibold text-blue-900">
-          Experience
-        </h2>
-        <ol className="relative border-l border-blue-900/20 pl-6">
-          {CV.experience.map((exp, idx) => (
-            <li key={idx} className="mb-8 last:mb-0">
-              {/* Timeline dot */}
-              <span
-                aria-hidden="true"
-                className="absolute -left-[7px] mt-1 size-3 rounded-full border-2 border-blue-900 bg-white"
-              />
-              <h3 className="text-base font-bold text-blue-900">{exp.role}</h3>
-              <p className="text-sm text-blue-900/60">
-                {exp.company} · {exp.location}
-              </p>
-              <p className="mb-3 text-xs text-blue-900/40">
-                {exp.startDate} – {exp.endDate}
-              </p>
-              <ul className="space-y-1">
-                {exp.bullets.map((bullet, bIdx) => (
-                  <li
-                    key={bIdx}
-                    className="flex gap-2 text-sm text-blue-900/70"
-                  >
-                    <span aria-hidden="true" className="mt-1 shrink-0 text-blue-900/30">
-                      ·
-                    </span>
-                    {bullet}
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ol>
-      </section>
-
-      {/* Education */}
-      <section aria-labelledby="education-heading" className="mb-12">
-        <h2 id="education-heading" className="mb-6 text-xl font-semibold text-blue-900">
-          Education
-        </h2>
-        <ol className="space-y-6">
-          {CV.education.map((edu, idx) => (
-            <li key={idx}>
-              <h3 className="font-bold text-blue-900">{edu.degree}</h3>
-              <p className="text-sm text-blue-900/60">
-                {edu.institution} · {edu.year}
-              </p>
-              {edu.description && (
-                <p className="mt-1 text-sm text-blue-900/50">
-                  {edu.description}
-                </p>
-              )}
-            </li>
-          ))}
-        </ol>
-      </section>
-
-      {/* Skills */}
-      <section aria-labelledby="skills-heading">
-        <h2 id="skills-heading" className="mb-6 text-xl font-semibold text-blue-900">
-          Skills
-        </h2>
-        <dl className="space-y-4">
-          {CV.skills.map((cat) => (
-            <div key={cat.category}>
-              <dt className="mb-2 text-sm font-semibold text-blue-900">
-                {cat.category}
-              </dt>
-              <dd>
-                <ul className="flex flex-wrap gap-2" aria-label={cat.category}>
-                  {cat.skills.map((skill) => (
-                    <li key={skill}>
-                      <Tag variant="info">{skill}</Tag>
-                    </li>
-                  ))}
-                </ul>
-              </dd>
+      {/* ── Education ── */}
+      <Section id="cv-education" heading="Education">
+        <div className="space-y-4">
+          {CV.education.map((edu, i) => (
+            <div key={i} className="flex flex-col gap-0.5 sm:flex-row sm:justify-between">
+              <div>
+                <p className="font-bold text-blue-900">{edu.institution}</p>
+                <p className="text-sm text-blue-900/70">{edu.degree}</p>
+              </div>
+              <div className="text-left sm:text-right">
+                <p className="font-bold text-blue-900">{edu.faculty}</p>
+                <p className="text-sm text-blue-900/60">{edu.period}</p>
+              </div>
             </div>
           ))}
-        </dl>
-      </section>
+        </div>
+      </Section>
+
+      {/* ── Technical Skills ── */}
+      <Section id="cv-skills" heading="Technical Skills">
+        <ul className="space-y-2">
+          {CV.skills.map((s) => (
+            <li key={s.category} className="flex flex-wrap gap-1 text-sm">
+              <span className="font-semibold text-blue-900">{s.category}:</span>
+              <span className="text-blue-900/70">{s.detail}</span>
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      {/* ── Certificates & Awards ── */}
+      <Section id="cv-certificates" heading="Certificates & Awards">
+        <ul className="space-y-2">
+          {CV.certificates.map((c, i) => (
+            <li key={i} className="flex gap-2 text-sm">
+              <span aria-hidden="true" className="mt-[6px] size-[5px] shrink-0 rounded-full bg-blue-900/50" />
+              <span className="flex-1 text-blue-900/75">{c.title}</span>
+              <span className="shrink-0 text-blue-900/50">{c.date}</span>
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      {/* ── Projects ── */}
+      <Section id="cv-projects" heading="Project">
+        <div className="space-y-5">
+          {CV.projects.map((p, i) => (
+            <div key={i}>
+              <div className="flex flex-wrap items-baseline justify-between gap-1">
+                <p className="font-bold text-blue-900">{p.title}</p>
+                <span className="text-sm text-blue-900/50">{p.date}</span>
+              </div>
+              <BulletList bullets={p.bullets} />
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* ── Work Experience ── */}
+      <Section id="cv-experience" heading="Work Experience">
+        <div className="space-y-5">
+          {CV.experience.map((exp, i) => (
+            <div key={i}>
+              <div className="flex flex-wrap items-baseline justify-between gap-1">
+                <p className="font-bold text-blue-900">{exp.company}</p>
+                <span className="text-sm text-blue-900/50">{exp.period}</span>
+              </div>
+              <p className="text-sm font-semibold text-blue-900/70">{exp.role}</p>
+              <BulletList bullets={exp.bullets} />
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* ── Achievements ── */}
+      <Section id="cv-achievements" heading="Achievement">
+        <div className="space-y-5">
+          {CV.achievements.map((a, i) => (
+            <div key={i}>
+              <div className="flex flex-wrap items-baseline justify-between gap-1">
+                <p className="font-bold text-blue-900">{a.title}</p>
+                <span className="text-sm text-blue-900/50">{a.period}</span>
+              </div>
+              <BulletList bullets={a.bullets} />
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* ── Other Information ── */}
+      <Section id="cv-other" heading="Other Information">
+        <ul className="space-y-2">
+          {CV.otherInfo.map((line, i) => (
+            <li key={i} className="flex gap-2 text-sm">
+              <span aria-hidden="true" className="mt-[6px] size-[5px] shrink-0 rounded-full bg-blue-900/50" />
+              <span className="text-blue-900/75">{line}</span>
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      {/* ── Skill chips (summary footer) ── */}
+      <div className="mt-4 flex flex-wrap gap-2">
+        {["Java", "Python", "C++", "React", "Spring Boot", "SQL", "Machine Learning", "NLP"].map((skill) => (
+          <Tag key={skill} variant="info">{skill}</Tag>
+        ))}
+      </div>
+
     </main>
   );
 }
