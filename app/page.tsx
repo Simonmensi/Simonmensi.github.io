@@ -3,7 +3,21 @@
  * @description Home page — tri-layer hero section for Simon Lei's portfolio.
  */
 
+import type { Metadata } from "next";
 import { Button } from "@/components/ui/Button";
+import { OWNER_NAME, OWNER_TITLE, SITE_URL, SITE_DESCRIPTION } from "@/constants";
+
+export const metadata: Metadata = {
+  title: `${OWNER_NAME} — ${OWNER_TITLE}`,
+  description: SITE_DESCRIPTION,
+  alternates: { canonical: `${SITE_URL}/` },
+  openGraph: {
+    title: `${OWNER_NAME} — ${OWNER_TITLE}`,
+    description: SITE_DESCRIPTION,
+    url: `${SITE_URL}/`,
+    type: "website",
+  },
+};
 
 /**
  * Props for the HeroSection component.
@@ -93,10 +107,10 @@ export default function HomePage() {
   return (
     <main>
       <HeroSection
-        title="Simon's Personal Portfolio"
-        subtitle="System Analyst"
+        title={`${OWNER_NAME}'s Portfolio`}
+        subtitle={OWNER_TITLE}
         ctaLabel="Explore My Work"
-        ctaHref="#projects"
+        ctaHref="/projects"
       />
     </main>
   );

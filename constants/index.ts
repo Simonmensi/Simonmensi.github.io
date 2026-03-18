@@ -66,6 +66,7 @@ export const VCARD_FILENAME = "simon-lei.vcf" as const;
 export const ROUTES = {
   home: "/",
   projects: "/projects",
+  cv: "/cv",
   guidelines: "/guidelines",
   contact: "/contact",
 } as const;
