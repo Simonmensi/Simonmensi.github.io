@@ -1,6 +1,6 @@
 /**
  * @file page.tsx
- * @description Home page — tri-layer hero section for Simon Lei's portfolio.
+ * @description Home page — hero section for Simon Lei's portfolio.
  */
 
 import type { Metadata } from "next";
@@ -34,51 +34,41 @@ interface HeroSectionProps {
 }
 
 /**
- * Tri-layer hero section.
+ * Hero section with a content-hugging gradient background.
  *
- * The background is split into three horizontal bands:
- * - Top 40 %   — solid `blue-900`
- * - Middle 20 % — vertical gradient `blue-900 → white`
- * - Bottom 40 % — solid `white`
+ * A single `absolute inset-0` gradient div tracks the section height
+ * automatically, so the button always stays within the blue zone at
+ * any browser zoom level (80 %–200 %). Vertical padding (`py-32
+ * sm:py-40`) is zoom-invariant and determines the coloured area —
+ * no viewport-percentage tricks that break on zoom.
  *
- * All three bands are absolutely positioned behind a `z-10` foreground.
+ * Gradient stops: solid blue-900 → short fade → white, replicating
+ * the original tri-layer look.
  *
  * @param props - {@link HeroSectionProps}
- * @returns A full-viewport-height hero section element.
+ * @returns A content-height hero `<section>` element.
  *
  * @example
  * ```tsx
  * <HeroSection
- *   title="Simon's Personal Portfolio"
+ *   title="Simon Lei's Portfolio"
  *   subtitle="System Analyst"
  *   ctaLabel="Explore My Work"
- *   ctaHref="#projects"
+ *   ctaHref="/projects"
  * />
  * ```
  */
 function HeroSection({ title, subtitle, ctaLabel, ctaHref }: HeroSectionProps) {
   return (
-    <section className="relative flex min-h-screen flex-col items-center justify-center pb-[30vh] overflow-hidden">
-      {/* Background layer 1 — solid blue-900 (top 40%) */}
+    <section className="relative w-full">
+      {/* Single gradient background — hugs content height automatically */}
       <div
         aria-hidden="true"
-        className="absolute inset-x-0 top-0 h-[40%] bg-blue-900"
+        className="absolute inset-0 bg-gradient-to-b from-blue-900 from-60% via-blue-900/80 via-80% to-white"
       />
 
-      {/* Background layer 2 — gradient blue-900 → white (middle 20%) */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-x-0 top-[40%] h-[20%] bg-gradient-to-b from-blue-900 to-white"
-      />
-
-      {/* Background layer 3 — solid white (bottom 40%) */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-x-0 bottom-0 h-[40%] bg-white"
-      />
-
-      {/* Foreground content */}
-      <div className="relative z-10 flex flex-col items-center gap-8 px-6 text-center sm:px-12 md:px-24">
+      {/* Foreground content — py-* controls the coloured area at any zoom */}
+      <div className="relative z-10 flex flex-col items-center gap-8 px-6 py-32 text-center sm:px-12 sm:py-40 md:px-24">
         <h1 className="text-5xl font-bold tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl">
           {title}
         </h1>
