@@ -19,6 +19,13 @@
 export type ProjectStatus = "active" | "completed" | "archived";
 
 /**
+ * Classification of the project's ownership/collaboration model.
+ * - `"personal"` — built independently
+ * - `"group"`    — collaborative team project
+ */
+export type ProjectType = "personal" | "group";
+
+/**
  * A single project entry rendered as a card on the Projects page.
  */
 export interface ProjectEntry {
@@ -38,6 +45,11 @@ export interface ProjectEntry {
   stack: string[];
   /** Current lifecycle status of the project. */
   status: ProjectStatus;
+  /**
+   * Whether this was a solo or collaborative effort.
+   * Rendered as a "Personal Project" or "Group Project" badge on the card.
+   */
+  projectType: ProjectType;
   /** Optional URL to the live deployment. */
   liveUrl?: string;
   /** Optional URL to the source code repository. */
@@ -72,41 +84,47 @@ export const PROJECTS: ProjectEntry[] = [
       "that stores visitor details in localStorage.",
     stack: ["Next.js", "TypeScript", "Tailwind CSS", "GitHub Pages"],
     status: "active",
+    projectType: "personal",
     liveUrl: "https://simonmensi.github.io",
     repoUrl: "https://github.com/Simonmensi/Simonmensi.github.io",
     date: "2026-03",
   },
   {
-    id: "bim-clash-dashboard",
-    title: "BIM Clash Detection Dashboard",
+    id: "menmen-golden-house",
+    title: "Menmen's Golden House",
     description:
-      "A Python + Dynamo pipeline that extracts Navisworks clash data into a " +
-      "structured JSON report and visualises clash hotspots per discipline " +
-      "on an interactive web dashboard.",
-    stack: ["Python", "Dynamo", "Navisworks", "Chart.js"],
-    status: "completed",
-    date: "2024-08",
+      "A comprehensive personal website serving as a digital portfolio and knowledge hub, " +
+      "featuring personal notes and highlight photographs. Currently in active development " +
+      "with plans to expand beyond its initial HTML foundation.",
+    stack: ["HTML", "CSS", "JavaScript"],
+    status: "active",
+    projectType: "personal",
+    repoUrl: "https://github.com/Simonmensi/menmen-golden-house-website",
+    date: "2024-09",
   },
   {
-    id: "ifc-pipeline",
-    title: "IFC Data Pipeline",
+    id: "aori-ecommerce",
+    title: "AORI E-commerce",
     description:
-      "An automated ETL pipeline that parses IFC 4.x files, validates element " +
-      "properties against ISO 19650 naming conventions, and exports a COBie-compatible " +
-      "Excel handover package.",
-    stack: ["Python", "IfcOpenShell", "Pandas", "Azure DevOps"],
+      "A full-stack Japanese fast-fashion e-commerce platform developed as a group project, " +
+      "focusing on user experience and scalable architecture with a Spring Boot backend " +
+      "and a React storefront backed by PostgreSQL.",
+    stack: ["Spring Boot", "Java", "React", "PostgreSQL"],
     status: "completed",
-    date: "2023-11",
+    projectType: "group",
+    date: "2024-05",
   },
   {
-    id: "cde-onboarding",
-    title: "CDE Onboarding Toolkit",
+    id: "smartsuschef",
+    title: "SmartSusChef",
     description:
-      "A self-service onboarding guide and configuration checklist for teams " +
-      "adopting Autodesk Construction Cloud (ACC). Includes role-based permission " +
-      "templates and a folder structure generator.",
-    stack: ["TypeScript", "React", "Autodesk ACC API"],
-    status: "archived",
-    date: "2022-05",
+      "A smart demand forecasting tool designed to help F&B operators prepare the right " +
+      "amount of food every day, reducing waste and optimising supply chains. " +
+      "Built as a group Applied Design (AD) project using machine learning and a FastAPI backend.",
+    stack: ["Python", "Machine Learning", "FastAPI", "Data Visualization"],
+    status: "completed",
+    projectType: "group",
+    repoUrl: "https://github.com/Fubuki233/SmartSusChef",
+    date: "2025-02",
   },
 ];
