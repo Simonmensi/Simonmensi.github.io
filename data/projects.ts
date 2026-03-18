@@ -113,7 +113,7 @@ export const PROJECTS: ProjectEntry[] = [
     status: "completed",
     projectType: "group",
     repoUrl: "https://github.com/Simonmensi/AORI-Ecommerce",
-    date: "2024-05",
+    date: "2025-11",
   },
   {
     id: "smartsuschef",
@@ -126,6 +126,6 @@ export const PROJECTS: ProjectEntry[] = [
     status: "completed",
     projectType: "group",
     repoUrl: "https://github.com/Fubuki233/SmartSusChef",
-    date: "2025-02",
+    date: "2026-02",
   },
 ];
