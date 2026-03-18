@@ -67,7 +67,6 @@ export const ROUTES = {
   home: "/",
   projects: "/projects",
   cv: "/cv",
-  guidelines: "/guidelines",
   contact: "/contact",
 } as const;
 
@@ -108,11 +107,10 @@ export interface NavLink {
  * Consumed by `Navigation.tsx`; override via the `links` prop for testing.
  */
 export const NAV_LINKS: NavLink[] = [
-  { label: "Home",       href: ROUTES.home },
-  { label: "Projects",   href: ROUTES.projects },
-  { label: "CV",         href: ROUTES.cv },
-  { label: "Guidelines", href: ROUTES.guidelines },
-  { label: "Contact",    href: ROUTES.contact,   cta: true },
+  { label: "Home",     href: ROUTES.home },
+  { label: "Projects", href: ROUTES.projects },
+  { label: "CV",       href: ROUTES.cv },
+  { label: "Contact",  href: ROUTES.contact, cta: true },
 ];
 
 // ─────────────────────────────────────────────────────────────

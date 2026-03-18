@@ -60,11 +60,6 @@ export function Footer({ ownerName = OWNER_NAME }: Props) {
               </Link>
             </li>
             <li>
-              <Link href={ROUTES.guidelines} className="text-sm text-blue-900/50 dark:text-blue-300/50 transition-colors hover:text-blue-900 dark:hover:text-blue-300">
-                Guidelines
-              </Link>
-            </li>
-            <li>
               <a href={CV_PDF_PATH} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-900/50 dark:text-blue-300/50 transition-colors hover:text-blue-900 dark:hover:text-blue-300">
                 CV
               </a>

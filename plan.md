@@ -63,6 +63,7 @@ via GitHub Pages. Built with Next.js 15 (App Router), TypeScript, and Tailwind C
 | 3.6 | Add `generateMetadata` to each page for SEO (title, description, OG tags) | `<meta>` tags present in static HTML output |
 | 3.7 | Create `public/sitemap.xml` and `public/robots.txt` | Files present in `/out` after build |
 | 3.8 | Final production build + deploy to GitHub Pages | Site live at `https://simonmensi.github.io` |
+| ~~3.x~~ | ~~Build `app/guidelines/page.tsx` — BIM ISO 19650 compliance checklist~~ | **DEPRECATED / REMOVED** — Feature removed per content cleanup (Mar 2026) |
 
 **Phase 3 Gate:** Site is live, all pages indexed, Lighthouse scores ≥ 90 across all categories.
 

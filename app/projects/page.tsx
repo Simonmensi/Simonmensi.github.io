@@ -35,7 +35,7 @@ export default function ProjectsPage() {
       <header className="mb-12 text-center">
         <h1 className="text-4xl font-bold text-blue-900 dark:text-blue-300">Projects</h1>
         <p className="mt-4 text-blue-900/60 dark:text-blue-300/60">
-          A selection of BIM pipelines, data tools, and web work.
+          A selection of projects made by Simon. Using different data tools, web work and languages.
         </p>
       </header>
 
