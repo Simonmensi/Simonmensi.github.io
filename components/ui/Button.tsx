@@ -65,11 +65,11 @@ const BASE =
 
 const VARIANT_CLASSES: Record<NonNullable<Props["variant"]>, string> = {
   primary:
-    "bg-blue-900 text-white shadow-md hover:bg-blue-800 focus-visible:ring-blue-900 focus-visible:ring-offset-white disabled:bg-blue-900/50",
+    "bg-blue-900 text-white shadow-md hover:bg-blue-800 focus-visible:ring-blue-900 focus-visible:ring-offset-white disabled:bg-blue-900/50 dark:bg-blue-700 dark:hover:bg-blue-600 dark:focus-visible:ring-blue-400",
   outline:
-    "border-2 border-blue-900 text-blue-900 bg-transparent hover:bg-blue-50 focus-visible:ring-blue-900 disabled:border-blue-900/40 disabled:text-blue-900/40",
+    "border-2 border-blue-900 text-blue-900 bg-transparent hover:bg-blue-50 focus-visible:ring-blue-900 disabled:border-blue-900/40 disabled:text-blue-900/40 dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-950 dark:focus-visible:ring-blue-400",
   ghost:
-    "text-blue-900 bg-transparent hover:bg-blue-50 focus-visible:ring-blue-900 disabled:text-blue-900/40",
+    "text-blue-900 bg-transparent hover:bg-blue-50 focus-visible:ring-blue-900 disabled:text-blue-900/40 dark:text-blue-300 dark:hover:bg-blue-950 dark:focus-visible:ring-blue-400",
 };
 
 const SIZE_CLASSES: Record<NonNullable<Props["size"]>, string> = {

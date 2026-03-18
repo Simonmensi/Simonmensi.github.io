@@ -89,8 +89,8 @@ export default function GuidelinesPage() {
     <main className="mx-auto max-w-3xl px-6 py-16">
       {/* Page header */}
       <header className="mb-12 text-center">
-        <h1 className="text-4xl font-bold text-blue-900">BIM Guidelines</h1>
-        <p className="mt-4 text-blue-900/60">
+        <h1 className="text-4xl font-bold text-blue-900 dark:text-blue-300">BIM Guidelines</h1>
+        <p className="mt-4 text-blue-900/60 dark:text-blue-300/60">
           Compliance checklist based on ISO 19650 and Singapore BIM Guide v2.
         </p>
       </header>
@@ -106,7 +106,7 @@ export default function GuidelinesPage() {
             <div className="mb-4 flex flex-wrap items-baseline gap-3">
               <h2
                 id={`section-${section.heading.replace(/\s+/g, "-").toLowerCase()}`}
-                className="text-xl font-semibold text-blue-900"
+                className="text-xl font-semibold text-blue-900 dark:text-blue-300"
               >
                 {section.heading}
               </h2>
@@ -118,9 +118,9 @@ export default function GuidelinesPage() {
               {section.items.map((item, idx) => (
                 <li
                   key={idx}
-                  className="flex flex-col gap-1 rounded-xl border border-blue-900/10 bg-white px-4 py-3 sm:flex-row sm:items-center sm:justify-between"
+                  className="flex flex-col gap-1 rounded-xl border border-blue-900/10 dark:border-white/10 bg-white dark:bg-gray-900 px-4 py-3 sm:flex-row sm:items-center sm:justify-between"
                 >
-                  <span className="text-sm text-blue-900">{item.label}</span>
+                  <span className="text-sm text-blue-900 dark:text-blue-300">{item.label}</span>
                   <div className="flex flex-col items-start gap-1 sm:items-end">
                     <Tag variant={item.status}>
                       {item.status === "success"
@@ -132,7 +132,7 @@ export default function GuidelinesPage() {
                             : "In Progress"}
                     </Tag>
                     {item.note && (
-                      <span className="text-xs text-blue-900/40">{item.note}</span>
+                      <span className="text-xs text-blue-900/40 dark:text-blue-300/40">{item.note}</span>
                     )}
                   </div>
                 </li>
@@ -143,7 +143,7 @@ export default function GuidelinesPage() {
       </div>
 
       {/* Footer note */}
-      <p className="mt-12 text-center text-xs text-blue-900/30">
+      <p className="mt-12 text-center text-xs text-blue-900/30 dark:text-blue-300/30">
         Checklist reflects project status as of March 2026. Standards: ISO 19650-1/2/3,
         Singapore BIM Guide v2.
       </p>

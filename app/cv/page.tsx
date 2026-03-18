@@ -30,10 +30,10 @@ export const metadata: Metadata = {
 function Section({ id, heading, children }: { id: string; heading: string; children: React.ReactNode }) {
   return (
     <section aria-labelledby={id} className="mb-10">
-      <h2 id={id} className="mb-1 text-base font-extrabold uppercase tracking-widest text-blue-900">
+      <h2 id={id} className="mb-1 text-base font-extrabold uppercase tracking-widest text-blue-900 dark:text-blue-300">
         {heading}
       </h2>
-      <hr className="mb-4 border-blue-900" />
+      <hr className="mb-4 border-blue-900 dark:border-blue-700" />
       {children}
     </section>
   );
@@ -44,8 +44,8 @@ function BulletList({ bullets }: { bullets: string[] }) {
   return (
     <ul className="mt-2 space-y-1">
       {bullets.map((b, i) => (
-        <li key={i} className="flex gap-2 text-sm text-blue-900/75">
-          <span aria-hidden="true" className="mt-[6px] size-[5px] shrink-0 rounded-full bg-blue-900/50" />
+        <li key={i} className="flex gap-2 text-sm text-blue-900/75 dark:text-blue-300/75">
+          <span aria-hidden="true" className="mt-[6px] size-[5px] shrink-0 rounded-full bg-blue-900/50 dark:bg-blue-400/50" />
           {b}
         </li>
       ))}
@@ -66,12 +66,12 @@ export default function CvPage() {
 
       {/* ── Header ── */}
       <header className="mb-10 text-center">
-        <h1 className="text-3xl font-extrabold uppercase tracking-widest text-blue-900">
+        <h1 className="text-3xl font-extrabold uppercase tracking-widest text-blue-900 dark:text-blue-300">
           {CV.name}
         </h1>
-        <p className="mt-2 text-sm text-blue-900/60">
+        <p className="mt-2 text-sm text-blue-900/60 dark:text-blue-300/60">
           Email:{" "}
-          <a href={`mailto:${CV.email}`} className="underline hover:text-blue-900">
+          <a href={`mailto:${CV.email}`} className="underline hover:text-blue-900 dark:hover:text-blue-300">
             {CV.email}
           </a>
           {"  "}Phone: {CV.phone}
@@ -85,7 +85,7 @@ export default function CvPage() {
 
       {/* ── Professional Profile ── */}
       <Section id="cv-profile" heading="Professional Profile">
-        <p className="text-sm leading-relaxed text-blue-900/75">{CV.summary}</p>
+        <p className="text-sm leading-relaxed text-blue-900/75 dark:text-blue-300/75">{CV.summary}</p>
       </Section>
 
       {/* ── Education ── */}
@@ -94,12 +94,12 @@ export default function CvPage() {
           {CV.education.map((edu, i) => (
             <div key={i} className="flex flex-col gap-0.5 sm:flex-row sm:justify-between">
               <div>
-                <p className="font-bold text-blue-900">{edu.institution}</p>
-                <p className="text-sm text-blue-900/70">{edu.degree}</p>
+                <p className="font-bold text-blue-900 dark:text-blue-300">{edu.institution}</p>
+                <p className="text-sm text-blue-900/70 dark:text-blue-300/70">{edu.degree}</p>
               </div>
               <div className="text-left sm:text-right">
-                <p className="font-bold text-blue-900">{edu.faculty}</p>
-                <p className="text-sm text-blue-900/60">{edu.period}</p>
+                <p className="font-bold text-blue-900 dark:text-blue-300">{edu.faculty}</p>
+                <p className="text-sm text-blue-900/60 dark:text-blue-300/60">{edu.period}</p>
               </div>
             </div>
           ))}
@@ -111,8 +111,8 @@ export default function CvPage() {
         <ul className="space-y-2">
           {CV.skills.map((s) => (
             <li key={s.category} className="flex flex-wrap gap-1 text-sm">
-              <span className="font-semibold text-blue-900">{s.category}:</span>
-              <span className="text-blue-900/70">{s.detail}</span>
+              <span className="font-semibold text-blue-900 dark:text-blue-300">{s.category}:</span>
+              <span className="text-blue-900/70 dark:text-blue-300/70">{s.detail}</span>
             </li>
           ))}
         </ul>
@@ -123,9 +123,9 @@ export default function CvPage() {
         <ul className="space-y-2">
           {CV.certificates.map((c, i) => (
             <li key={i} className="flex gap-2 text-sm">
-              <span aria-hidden="true" className="mt-[6px] size-[5px] shrink-0 rounded-full bg-blue-900/50" />
-              <span className="flex-1 text-blue-900/75">{c.title}</span>
-              <span className="shrink-0 text-blue-900/50">{c.date}</span>
+              <span aria-hidden="true" className="mt-[6px] size-[5px] shrink-0 rounded-full bg-blue-900/50 dark:bg-blue-400/50" />
+              <span className="flex-1 text-blue-900/75 dark:text-blue-300/75">{c.title}</span>
+              <span className="shrink-0 text-blue-900/50 dark:text-blue-300/50">{c.date}</span>
             </li>
           ))}
         </ul>
@@ -137,8 +137,8 @@ export default function CvPage() {
           {CV.projects.map((p, i) => (
             <div key={i}>
               <div className="flex flex-wrap items-baseline justify-between gap-1">
-                <p className="font-bold text-blue-900">{p.title}</p>
-                <span className="text-sm text-blue-900/50">{p.date}</span>
+                <p className="font-bold text-blue-900 dark:text-blue-300">{p.title}</p>
+                <span className="text-sm text-blue-900/50 dark:text-blue-300/50">{p.date}</span>
               </div>
               <BulletList bullets={p.bullets} />
             </div>
@@ -152,10 +152,10 @@ export default function CvPage() {
           {CV.experience.map((exp, i) => (
             <div key={i}>
               <div className="flex flex-wrap items-baseline justify-between gap-1">
-                <p className="font-bold text-blue-900">{exp.company}</p>
-                <span className="text-sm text-blue-900/50">{exp.period}</span>
+                <p className="font-bold text-blue-900 dark:text-blue-300">{exp.company}</p>
+                <span className="text-sm text-blue-900/50 dark:text-blue-300/50">{exp.period}</span>
               </div>
-              <p className="text-sm font-semibold text-blue-900/70">{exp.role}</p>
+              <p className="text-sm font-semibold text-blue-900/70 dark:text-blue-300/70">{exp.role}</p>
               <BulletList bullets={exp.bullets} />
             </div>
           ))}
@@ -168,8 +168,8 @@ export default function CvPage() {
           {CV.achievements.map((a, i) => (
             <div key={i}>
               <div className="flex flex-wrap items-baseline justify-between gap-1">
-                <p className="font-bold text-blue-900">{a.title}</p>
-                <span className="text-sm text-blue-900/50">{a.period}</span>
+                <p className="font-bold text-blue-900 dark:text-blue-300">{a.title}</p>
+                <span className="text-sm text-blue-900/50 dark:text-blue-300/50">{a.period}</span>
               </div>
               <BulletList bullets={a.bullets} />
             </div>
@@ -182,8 +182,8 @@ export default function CvPage() {
         <ul className="space-y-2">
           {CV.otherInfo.map((line, i) => (
             <li key={i} className="flex gap-2 text-sm">
-              <span aria-hidden="true" className="mt-[6px] size-[5px] shrink-0 rounded-full bg-blue-900/50" />
-              <span className="text-blue-900/75">{line}</span>
+              <span aria-hidden="true" className="mt-[6px] size-[5px] shrink-0 rounded-full bg-blue-900/50 dark:bg-blue-400/50" />
+              <span className="text-blue-900/75 dark:text-blue-300/75">{line}</span>
             </li>
           ))}
         </ul>

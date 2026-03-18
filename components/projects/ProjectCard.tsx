@@ -55,21 +55,21 @@ export function ProjectCard({ project }: Props) {
     project;
 
   return (
-    <article className="flex flex-col gap-4 rounded-2xl border border-blue-900/10 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
+    <article className="flex flex-col gap-4 rounded-2xl border border-blue-900/10 dark:border-white/10 bg-white dark:bg-gray-900 p-6 shadow-sm transition-shadow hover:shadow-md">
       {/* Header row: title + status badge */}
       <div className="flex flex-wrap items-start justify-between gap-2">
-        <h2 className="text-xl font-bold text-blue-900">{title}</h2>
+        <h2 className="text-xl font-bold text-blue-900 dark:text-blue-300">{title}</h2>
         <Tag variant={STATUS_VARIANT[status]}>{STATUS_LABEL[status]}</Tag>
       </div>
 
       {/* Project type badge + date */}
       <div className="flex flex-wrap items-center gap-2">
         <Tag variant={TYPE_VARIANT[projectType]}>{TYPE_LABEL[projectType]}</Tag>
-        <span className="text-xs text-blue-900/50">{date}</span>
+        <span className="text-xs text-blue-900/50 dark:text-blue-300/50">{date}</span>
       </div>
 
       {/* Description */}
-      <p className="flex-1 text-sm leading-relaxed text-blue-900/70">
+      <p className="flex-1 text-sm leading-relaxed text-blue-900/70 dark:text-blue-300/70">
         {description}
       </p>
 

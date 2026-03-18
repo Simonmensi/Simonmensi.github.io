@@ -38,7 +38,7 @@ export function ThankYouMessage({ visitorName }: Props) {
   return (
     <div className="flex flex-col items-center gap-4 text-center">
       {/* Checkmark icon */}
-      <div className="flex size-16 items-center justify-center rounded-full bg-green-100">
+      <div className="flex size-16 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30">
         <svg
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
@@ -52,19 +52,19 @@ export function ThankYouMessage({ visitorName }: Props) {
         </svg>
       </div>
 
-      <h2 className="text-2xl font-bold text-blue-900">
+      <h2 className="text-2xl font-bold text-blue-900 dark:text-blue-300">
         Thanks, {visitorName.trim()}!
       </h2>
-      <p className="max-w-sm text-blue-900/60">
+      <p className="max-w-sm text-blue-900/60 dark:text-blue-300/60">
         {OWNER_NAME}&apos;s contact card (<strong>{VCARD_FILENAME}</strong>) is
         downloading now. Open it to add {OWNER_NAME} directly to your contacts.
       </p>
 
-      <p className="mt-2 text-xs text-blue-900/40">
+      <p className="mt-2 text-xs text-blue-900/40 dark:text-blue-300/40">
         Didn&apos;t receive the download?{" "}
         <button
           type="button"
-          className="underline underline-offset-2 transition-colors hover:text-blue-900"
+          className="underline underline-offset-2 transition-colors hover:text-blue-900 dark:hover:text-blue-300"
           onClick={handleRetry}
         >
           Download again

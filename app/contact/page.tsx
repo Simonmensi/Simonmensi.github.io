@@ -36,10 +36,10 @@ export default function ContactPage() {
           <>
             {/* Header */}
             <div className="mb-8 text-center">
-              <h1 className="text-3xl font-bold tracking-tight text-blue-900 sm:text-4xl">
+              <h1 className="text-3xl font-bold tracking-tight text-blue-900 dark:text-blue-300 sm:text-4xl">
                 Exchange Contacts
               </h1>
-              <p className="mt-3 text-base text-blue-900/60">
+              <p className="mt-3 text-base text-blue-900/60 dark:text-blue-300/60">
                 Enter your details and you&apos;ll instantly receive Simon&apos;s
                 contact card.
               </p>
@@ -50,7 +50,7 @@ export default function ContactPage() {
             <VCardForm onSuccess={setVisitorName} />
 
             {/* Privacy note */}
-            <p className="mt-6 text-center text-xs text-blue-900/40">
+            <p className="mt-6 text-center text-xs text-blue-900/40 dark:text-blue-300/40">
               Your details are stored locally on this device only.
               No data is sent to any server.
             </p>

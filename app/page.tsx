@@ -64,7 +64,7 @@ function HeroSection({ title, subtitle, ctaLabel, ctaHref }: HeroSectionProps) {
       {/* Single gradient background — hugs content height automatically */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-gradient-to-b from-blue-900 from-60% via-blue-900/80 via-80% to-white"
+        className="absolute inset-0 bg-gradient-to-b from-blue-900 from-60% via-blue-900/80 via-80% to-white dark:to-gray-950"
       />
 
       {/* Foreground content — py-* controls the coloured area at any zoom */}

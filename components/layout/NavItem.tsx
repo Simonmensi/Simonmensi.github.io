@@ -56,7 +56,7 @@ export function NavItem({ link, pathname, onClick }: Props) {
         href={link.href}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-1 text-sm font-medium text-blue-900/70 transition-colors hover:text-blue-900"
+        className="inline-flex items-center gap-1 text-sm font-medium text-blue-900/70 dark:text-blue-300/70 transition-colors hover:text-blue-900 dark:hover:text-blue-300"
         onClick={onClick}
       >
         {link.label}
@@ -79,10 +79,10 @@ export function NavItem({ link, pathname, onClick }: Props) {
       href={link.href}
       onClick={onClick}
       className={[
-        "text-sm font-medium transition-colors hover:text-blue-900",
+        "text-sm font-medium transition-colors hover:text-blue-900 dark:hover:text-blue-300",
         isActive
-          ? "text-blue-900 underline underline-offset-4 decoration-blue-900/40"
-          : "text-blue-900/70",
+          ? "text-blue-900 dark:text-blue-300 underline underline-offset-4 decoration-blue-900/40 dark:decoration-blue-300/40"
+          : "text-blue-900/70 dark:text-blue-300/70",
       ].join(" ")}
     >
       {link.label}

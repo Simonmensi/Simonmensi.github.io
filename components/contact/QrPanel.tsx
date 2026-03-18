@@ -46,7 +46,7 @@ export function QrPanel({ url = CONTACT_URL }: Props) {
       <button
         type="button"
         onClick={() => setShowQr((prev) => !prev)}
-        className="text-sm font-medium text-blue-900/50 underline underline-offset-2 transition-colors hover:text-blue-900"
+        className="text-sm font-medium text-blue-900/50 dark:text-blue-300/50 underline underline-offset-2 transition-colors hover:text-blue-900 dark:hover:text-blue-300"
         aria-expanded={showQr}
         aria-controls="qr-panel"
       >
@@ -61,7 +61,7 @@ export function QrPanel({ url = CONTACT_URL }: Props) {
             label="Scan to open Simon's contact exchange form"
             className="shadow-md"
           />
-          <p className="text-xs text-blue-900/40">
+          <p className="text-xs text-blue-900/40 dark:text-blue-300/40">
             Scan to open this page on your phone
           </p>
         </div>

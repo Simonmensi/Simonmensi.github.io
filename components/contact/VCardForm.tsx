@@ -61,12 +61,12 @@ function validate(values: FormValues): FormErrors {
 
 /** Shared Tailwind classes for the text inputs. */
 const INPUT_BASE =
-  "w-full rounded-xl border px-4 py-3 text-base text-blue-900 outline-none " +
-  "placeholder:text-blue-900/30 transition-colors " +
-  "focus:border-blue-900 focus:ring-2 focus:ring-blue-900/20";
+  "w-full rounded-xl border px-4 py-3 text-base text-blue-900 dark:text-blue-200 outline-none " +
+  "placeholder:text-blue-900/30 dark:placeholder:text-blue-300/30 transition-colors " +
+  "focus:border-blue-900 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-900/20 dark:focus:ring-blue-400/20";
 
-const INPUT_VALID = "border-blue-900/20 bg-white hover:border-blue-900/40";
-const INPUT_ERROR = "border-red-400 bg-red-50";
+const INPUT_VALID = "border-blue-900/20 dark:border-blue-700/40 bg-white dark:bg-gray-900 hover:border-blue-900/40 dark:hover:border-blue-500/60";
+const INPUT_ERROR = "border-red-400 bg-red-50 dark:bg-red-900/20";
 
 /**
  * Contact lead-capture form.
@@ -107,7 +107,7 @@ export function VCardForm({ onSuccess }: Props) {
     <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
       {/* Name field */}
       <div className="flex flex-col gap-1.5">
-        <label htmlFor="name" className="text-sm font-medium text-blue-900">
+        <label htmlFor="name" className="text-sm font-medium text-blue-900 dark:text-blue-300">
           Your Name
         </label>
         <input
@@ -125,7 +125,7 @@ export function VCardForm({ onSuccess }: Props) {
 
       {/* Phone field */}
       <div className="flex flex-col gap-1.5">
-        <label htmlFor="phone" className="text-sm font-medium text-blue-900">
+        <label htmlFor="phone" className="text-sm font-medium text-blue-900 dark:text-blue-300">
           Phone Number
         </label>
         <input

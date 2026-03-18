@@ -33,8 +33,8 @@ export default function ProjectsPage() {
     <main className="mx-auto max-w-5xl px-6 py-16">
       {/* Page heading */}
       <header className="mb-12 text-center">
-        <h1 className="text-4xl font-bold text-blue-900">Projects</h1>
-        <p className="mt-4 text-blue-900/60">
+        <h1 className="text-4xl font-bold text-blue-900 dark:text-blue-300">Projects</h1>
+        <p className="mt-4 text-blue-900/60 dark:text-blue-300/60">
           A selection of BIM pipelines, data tools, and web work.
         </p>
       </header>
