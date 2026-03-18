@@ -1,6 +1,6 @@
 /**
  * @file vcard-data.ts
- * @description Single source of truth for Simon Mensi's contact details.
+ * @description Single source of truth for Simon Lei's contact details.
  * Update this file whenever contact information changes — all vCard
  * generation pulls from here automatically.
  */
@@ -30,7 +30,7 @@ export interface ContactData {
 }
 
 /**
- * Simon Mensi's contact details.
+ * Simon Lei's contact details.
  *
  * This constant is imported by {@link generateVCard} to produce the `.vcf`
  * file that is downloaded by visitors on the Contact page.
@@ -42,8 +42,8 @@ export interface ContactData {
  * ```
  */
 export const SIMON_VCARD_DATA: ContactData = {
-  fullName: "Simon Mensi",
-  lastName: "Mensi",
+  fullName: "Simon Lei",
+  lastName: "Lei",
   firstName: "Simon",
   title: "System Analyst",
   org: "NUS-ISS",

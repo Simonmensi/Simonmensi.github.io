@@ -274,6 +274,7 @@ export default function ContactPage() {
               <Button
                 variant="primary"
                 size="md"
+                type="submit"
                 isLoading={isLoading}
                 className="mt-2 w-full justify-center"
               >
