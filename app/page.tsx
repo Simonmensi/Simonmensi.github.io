@@ -1,6 +1,6 @@
 /**
  * @file page.tsx
- * @description Home page — tri-layer hero section for Simon Mensi's portfolio.
+ * @description Home page — tri-layer hero section for Simon Lei's portfolio.
  */
 
 import { Button } from "@/components/ui/Button";

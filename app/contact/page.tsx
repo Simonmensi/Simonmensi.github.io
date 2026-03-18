@@ -15,8 +15,12 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { QrCode } from "@/components/ui/QrCode";
 import { buildVCardString, downloadVCard, saveLead } from "@/lib/generate-vcard";
 import { SIMON_VCARD_DATA } from "@/lib/vcard-data";
+
+/** The live URL visitors will land on after scanning the QR code. */
+const CONTACT_URL = "https://simonmensi.github.io/contact/";
 
 /**
  * Shape of the contact form's field values.
@@ -130,6 +134,7 @@ export default function ContactPage() {
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitted, setSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showQr, setShowQr] = useState(false);
 
   /**
    * Handles form field changes and clears the error for the changed field.
@@ -194,6 +199,36 @@ export default function ContactPage() {
                 Enter your details and you&apos;ll instantly receive Simon&apos;s
                 contact card.
               </p>
+            </div>
+
+            {/* QR code panel — lets Simon show the code on his screen */}
+            <div className="mb-6 flex flex-col items-center">
+              <button
+                type="button"
+                onClick={() => setShowQr((prev) => !prev)}
+                className="text-sm font-medium text-blue-900/50 underline underline-offset-2 transition-colors hover:text-blue-900"
+                aria-expanded={showQr}
+                aria-controls="qr-panel"
+              >
+                {showQr ? "Hide QR code" : "Show QR code to share this page"}
+              </button>
+
+              {showQr && (
+                <div
+                  id="qr-panel"
+                  className="mt-4 flex flex-col items-center gap-2"
+                >
+                  <QrCode
+                    value={CONTACT_URL}
+                    size={200}
+                    label="Scan to open Simon's contact exchange form"
+                    className="shadow-md"
+                  />
+                  <p className="text-xs text-blue-900/40">
+                    Scan to open this page on your phone
+                  </p>
+                </div>
+              )}
             </div>
 
             {/* Form */}
