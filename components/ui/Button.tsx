@@ -47,6 +47,13 @@ export interface Props {
    * @defaultValue `false`
    */
   isLoading?: boolean;
+  /**
+   * The `type` attribute forwarded to the underlying `<button>` element.
+   * Use `"submit"` when the button is inside a `<form>` that should be
+   * submitted on click.
+   * @defaultValue `"button"`
+   */
+  type?: "button" | "submit" | "reset";
   /** Click handler — only applied when rendering as a `<button>`. */
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
@@ -138,6 +145,7 @@ export function Button({
   className = "",
   disabled = false,
   isLoading = false,
+  type = "button",
   onClick,
 }: Props) {
   const isDisabled = disabled || isLoading;
@@ -174,7 +182,7 @@ export function Button({
 
   return (
     <button
-      type="button"
+      type={type}
       className={classes}
       disabled={isDisabled}
       onClick={onClick}
