@@ -78,17 +78,17 @@ function HeroSection({ title, subtitle, ctaLabel, ctaHref }: HeroSectionProps) {
       />
 
       {/* Foreground content */}
-      <div className="relative z-10 flex flex-col items-center gap-6 px-6 text-center sm:px-12 md:px-24">
-        <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
+      <div className="relative z-10 flex flex-col items-center gap-8 px-6 text-center sm:px-12 md:px-24">
+        <h1 className="text-5xl font-bold tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl">
           {title}
         </h1>
-        <p className="text-lg font-medium text-blue-100 sm:text-xl md:text-2xl">
+        <p className="text-xl font-medium text-blue-100 sm:text-2xl md:text-3xl">
           {subtitle}
         </p>
         <Button
           href={ctaHref}
           variant="outline"
-          size="md"
+          size="lg"
           className="mt-4 border-white text-white hover:bg-white hover:text-blue-900 focus-visible:ring-white focus-visible:ring-offset-blue-900"
         >
           {ctaLabel}
