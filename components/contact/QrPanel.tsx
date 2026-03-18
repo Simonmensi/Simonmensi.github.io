@@ -6,7 +6,6 @@
 
 "use client";
 
-import { useState } from "react";
 import { QrCode } from "@/components/ui/QrCode";
 import { CONTACT_URL } from "@/constants";
 
@@ -19,33 +18,31 @@ export interface Props {
    * @defaultValue {@link CONTACT_URL}
    */
   url?: string;
+  /** Whether the QR code is currently visible. Controlled by the parent. */
+  showQr: boolean;
+  /** Called when the toggle button is clicked. */
+  onToggle: () => void;
 }
 
 /**
- * Collapsible panel containing a scannable QR code.
+ * QR code panel with a toggle button.
  *
- * Hidden by default behind a toggle button so it does not distract visitors
- * who arrived by scanning. Simon can expand it to share the page URL in person.
+ * Visibility is controlled externally via `showQr` / `onToggle` so the
+ * parent page can also hide/show the form when the QR is toggled.
  *
  * @param props - {@link Props}
- * @returns A collapsible `<div>` with a toggle button and a {@link QrCode}.
+ * @returns A `<div>` with a toggle button and, when open, a {@link QrCode}.
  *
  * @example
- * // Default — encodes the live /contact/ URL
- * <QrPanel />
- *
- * @example
- * // Override for local testing
- * <QrPanel url="http://localhost:3000/contact/" />
+ * const [showQr, setShowQr] = useState(false);
+ * <QrPanel showQr={showQr} onToggle={() => setShowQr(v => !v)} />
  */
-export function QrPanel({ url = CONTACT_URL }: Props) {
-  const [showQr, setShowQr] = useState(false);
-
+export function QrPanel({ url = CONTACT_URL, showQr, onToggle }: Props) {
   return (
     <div className="mb-6 flex flex-col items-center">
       <button
         type="button"
-        onClick={() => setShowQr((prev) => !prev)}
+        onClick={onToggle}
         className="text-sm font-medium text-blue-900/50 dark:text-blue-300/50 underline underline-offset-2 transition-colors hover:text-blue-900 dark:hover:text-blue-300"
         aria-expanded={showQr}
         aria-controls="qr-panel"

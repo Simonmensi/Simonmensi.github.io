@@ -21,10 +21,14 @@ import { ThankYouMessage } from "@/components/contact/ThankYouMessage";
  * Contact page — composes {@link QrPanel}, {@link VCardForm}, and
  * {@link ThankYouMessage} into the lead-capture flow.
  *
+ * When the QR panel is open the form is hidden, so Simon can show
+ * the QR on his screen without the input fields visible.
+ *
  * @returns The contact page element.
  */
 export default function ContactPage() {
   const [visitorName, setVisitorName] = useState<string | null>(null);
+  const [showQr, setShowQr] = useState(false);
 
   return (
     <main className="flex min-h-[80vh] flex-col items-center justify-center px-6 py-16">
@@ -45,15 +49,19 @@ export default function ContactPage() {
               </p>
             </div>
 
-            <QrPanel />
+            <QrPanel showQr={showQr} onToggle={() => setShowQr((v) => !v)} />
 
-            <VCardForm onSuccess={setVisitorName} />
+            {!showQr && (
+              <>
+                <VCardForm onSuccess={setVisitorName} />
 
-            {/* Privacy note */}
-            <p className="mt-6 text-center text-xs text-blue-900/40 dark:text-blue-300/40">
-              Your details are stored locally on this device only.
-              No data is sent to any server.
-            </p>
+                {/* Privacy note */}
+                <p className="mt-6 text-center text-xs text-blue-900/40 dark:text-blue-300/40">
+                  Your details are stored locally on this device only.
+                  No data is sent to any server.
+                </p>
+              </>
+            )}
           </>
         )}
 
