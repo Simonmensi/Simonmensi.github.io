@@ -1,17 +1,19 @@
 /**
  * @file contact/page.tsx
- * @description Contact page — automatically downloads Simon's vCard when
- * the page loads. Intended to be reached by scanning the QR code.
+ * @description Contact page — shows a QR code for scanning and a direct
+ * download button for Simon's vCard.
  *
- * Flow:
- * 1. Visitor scans QR code → lands here on mobile
- * 2. vCard download is triggered immediately on mount
- * 3. Page shows a confirmation with a manual fallback download button
+ * Flow (mobile, via QR scan):
+ * 1. Visitor scans the QR code → lands here
+ * 2. Taps "Save to Contacts" → vCard downloads, phone prompts to add contact
+ *
+ * Flow (desktop, Simon showing his screen):
+ * 1. Simon opens this page and shows the QR code
+ * 2. Visitor scans with their phone
  */
 
 "use client";
 
-import { useEffect, useState } from "react";
 import { QrPanel } from "@/components/contact/QrPanel";
 import { Button } from "@/components/ui/Button";
 import { VCARD_FILENAME, OWNER_NAME } from "@/constants";
@@ -19,21 +21,12 @@ import { buildVCardString, downloadVCard } from "@/lib/generate-vcard";
 import { SIMON_VCARD_DATA } from "@/lib/vcard-data";
 
 /**
- * Contact page — downloads Simon's vCard on mount and shows a QR code
- * for sharing in person.
+ * Contact page.
  *
  * @returns The contact page element.
  */
 export default function ContactPage() {
-  const [downloaded, setDownloaded] = useState(false);
-
-  useEffect(() => {
-    const vcf = buildVCardString(SIMON_VCARD_DATA);
-    downloadVCard(vcf, VCARD_FILENAME);
-    setDownloaded(true);
-  }, []);
-
-  function handleRetry() {
+  function handleDownload() {
     const vcf = buildVCardString(SIMON_VCARD_DATA);
     downloadVCard(vcf, VCARD_FILENAME);
   }
@@ -48,33 +41,24 @@ export default function ContactPage() {
             Add Simon&apos;s Contact
           </h1>
           <p className="mt-3 text-base text-blue-900/60 dark:text-blue-300/60">
-            {downloaded
-              ? `${OWNER_NAME}'s card is downloading — open it to save the contact.`
-              : "Preparing your download…"}
+            Scan the code below to add Simon&apos;s card to your contacts.
           </p>
         </div>
 
-        {/* Fallback download button */}
-        {downloaded && (
-          <div className="mb-10">
-            <Button
-              variant="primary"
-              size="md"
-              onClick={handleRetry}
-              className="w-full justify-center"
-            >
-              Download again
-            </Button>
-          </div>
-        )}
-
-        {/* QR for sharing in person */}
-        <div className="border-t border-blue-900/10 dark:border-blue-300/10 pt-8">
-          <p className="mb-6 text-sm text-blue-900/50 dark:text-blue-300/50">
-            Scan the code to add Simon&apos;s card
-          </p>
+        {/* QR code */}
+        <div className="mb-10">
           <QrPanel />
         </div>
+
+        {/* Manual download — useful after scanning on mobile */}
+        <Button
+          variant="primary"
+          size="md"
+          onClick={handleDownload}
+          className="w-full justify-center"
+        >
+          Save {OWNER_NAME} to Contacts
+        </Button>
 
       </div>
     </main>
