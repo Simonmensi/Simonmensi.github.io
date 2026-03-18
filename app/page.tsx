@@ -1,65 +1,99 @@
-import Image from "next/image";
+/**
+ * @file page.tsx
+ * @description Home page — tri-layer hero section for Simon Mensi's portfolio.
+ */
 
-export default function Home() {
+/**
+ * Props for the HeroSection component.
+ */
+interface HeroSectionProps {
+  /** Primary heading displayed in the hero. */
+  title: string;
+  /** Secondary line displayed below the title. */
+  subtitle: string;
+  /** Label text for the call-to-action button. */
+  ctaLabel: string;
+  /** href target for the call-to-action button. */
+  ctaHref: string;
+}
+
+/**
+ * Tri-layer hero section.
+ *
+ * The background is split into three horizontal bands:
+ * - Top 40 %   — solid `blue-900`
+ * - Middle 20 % — vertical gradient `blue-900 → white`
+ * - Bottom 40 % — solid `white`
+ *
+ * All three bands are absolutely positioned behind a `z-10` foreground.
+ *
+ * @param props - {@link HeroSectionProps}
+ * @returns A full-viewport-height hero section element.
+ *
+ * @example
+ * ```tsx
+ * <HeroSection
+ *   title="Simon's Personal Portfolio"
+ *   subtitle="System Analyst"
+ *   ctaLabel="Explore My Work"
+ *   ctaHref="#projects"
+ * />
+ * ```
+ */
+function HeroSection({ title, subtitle, ctaLabel, ctaHref }: HeroSectionProps) {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden">
+      {/* Background layer 1 — solid blue-900 (top 40%) */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 top-0 h-[40%] bg-blue-900"
+      />
+
+      {/* Background layer 2 — gradient blue-900 → white (middle 20%) */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 top-[40%] h-[20%] bg-gradient-to-b from-blue-900 to-white"
+      />
+
+      {/* Background layer 3 — solid white (bottom 40%) */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 bottom-0 h-[40%] bg-white"
+      />
+
+      {/* Foreground content */}
+      <div className="relative z-10 flex flex-col items-center gap-6 px-6 text-center sm:px-12 md:px-24">
+        <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
+          {title}
+        </h1>
+        <p className="text-lg font-medium text-blue-100 sm:text-xl md:text-2xl">
+          {subtitle}
+        </p>
+        <a
+          href={ctaHref}
+          className="mt-4 inline-block rounded-full bg-white px-8 py-3 text-base font-semibold text-blue-900 shadow-md transition-colors hover:bg-blue-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-blue-900 sm:text-lg"
+        >
+          {ctaLabel}
+        </a>
+      </div>
+    </section>
+  );
+}
+
+/**
+ * Home page — renders the Hero section.
+ *
+ * @returns The root home page element.
+ */
+export default function HomePage() {
+  return (
+    <main>
+      <HeroSection
+        title="Simon's Personal Portfolio"
+        subtitle="System Analyst"
+        ctaLabel="Explore My Work"
+        ctaHref="#projects"
+      />
+    </main>
   );
 }
