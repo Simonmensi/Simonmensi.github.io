@@ -112,6 +112,7 @@ export const PROJECTS: ProjectEntry[] = [
     stack: ["Spring Boot", "Java", "React", "PostgreSQL"],
     status: "completed",
     projectType: "group",
+    repoUrl: "https://github.com/Simonmensi/AORI-Ecommerce",
     date: "2024-05",
   },
   {
