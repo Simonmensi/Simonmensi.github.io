@@ -5,6 +5,14 @@
  * generation pulls from here automatically.
  */
 
+import {
+  OWNER_NAME,
+  OWNER_TITLE,
+  OWNER_ORG,
+  SITE_URL,
+  LINKEDIN_URL,
+} from "@/constants";
+
 /**
  * Shape of a person's contact data used for vCard generation.
  */
@@ -42,13 +50,13 @@ export interface ContactData {
  * ```
  */
 export const SIMON_VCARD_DATA: ContactData = {
-  fullName: "Simon Lei",
+  fullName: OWNER_NAME,
   lastName: "Lei",
   firstName: "Simon",
-  title: "System Analyst",
-  org: "NUS-ISS",
+  title: OWNER_TITLE,
+  org: OWNER_ORG,
   phone: "+6580385655",
   email: "Simon68562776@outlook.com",
-  website: "https://simonmensi.github.io",
-  linkedin: "https://www.linkedin.com/in/诺臻-雷-4aa88039b",
+  website: SITE_URL,
+  linkedin: LINKEDIN_URL,
 };
