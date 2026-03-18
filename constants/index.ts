@@ -30,8 +30,7 @@ export const OWNER_ORG = "NUS-ISS" as const;
 export const SITE_URL = "https://simonmensi.github.io" as const;
 
 /**
- * Absolute URL of the contact / lead-gen page.
- * Used as the QR code target so the scanned URL is always correct.
+ * Absolute URL of the contact page.
  */
 export const CONTACT_URL = `${SITE_URL}/contact/` as const;
 
