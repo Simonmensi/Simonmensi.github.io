@@ -7,7 +7,7 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
@@ -16,6 +16,9 @@ export interface Props {
   /** Additional class names to merge onto the button. */
   className?: string;
 }
+
+// Track whether the component has mounted (client-only).
+const subscribe = (cb: () => void) => { cb(); return () => {}; };
 
 /**
  * Icon button that toggles between light and dark themes.
@@ -29,10 +32,8 @@ export interface Props {
  */
 export function ModeToggle({ className }: Props) {
   const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const mounted = useSyncExternalStore(subscribe, () => true, () => false);
 
-  // Avoid hydration mismatch — only render after mount
-  useEffect(() => setMounted(true), []);
   if (!mounted) return null;
 
   const isDark = theme === "dark";
