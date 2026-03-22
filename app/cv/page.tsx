@@ -74,7 +74,7 @@ export default function CvPage() {
           <a href={`mailto:${CV.email}`} className="underline hover:text-blue-900 dark:hover:text-blue-300">
             {CV.email}
           </a>
-          {"  "}Phone: {CV.phone}
+
         </p>
         <div className="mt-4">
           <Button href={CV_PDF_PATH} variant="outline" size="sm">

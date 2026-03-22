@@ -100,6 +100,12 @@ export interface NavLink {
    * @defaultValue `false`
    */
   cta?: boolean;
+  /**
+   * When `true` the link is rendered as visually present but non-interactive.
+   * Use to temporarily disable a nav entry without removing it from the UI.
+   * @defaultValue `false`
+   */
+  disabled?: boolean;
 }
 
 /**

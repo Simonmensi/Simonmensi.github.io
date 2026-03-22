@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useActionState } from "react";
+import { useState, useEffect, useActionState, useTransition } from "react";
 import { Button } from "@/components/ui/Button";
 import { VCARD_FILENAME, OWNER_NAME } from "@/constants";
 import { buildVCardString, downloadVCard } from "@/lib/generate-vcard";
@@ -47,10 +47,11 @@ const INITIAL_STATE: ActionResult = { success: false, errors: {} };
 export function VCardForm({ onSuccess }: Props) {
   const [values, setValues] = useState<FormValues>({ name: "", phone: "" });
   const [clientErrors, setClientErrors] = useState<FormErrors>({});
-  const [serverResult, formAction, isPending] = useActionState<
+  const [serverResult, formAction] = useActionState<
     ActionResult,
     FormData
   >(saveLead, INITIAL_STATE);
+  const [isPending, startTransition] = useTransition();
 
   // Handle successful server action — trigger vCard download and notify parent
   useEffect(() => {
@@ -77,7 +78,9 @@ export function VCardForm({ onSuccess }: Props) {
     const formData = new FormData();
     formData.set("name", values.name.trim());
     formData.set("phone", values.phone.trim());
-    formAction(formData);
+    startTransition(() => {
+      formAction(formData);
+    });
   }
 
   const serverErrors = serverResult.success ? {} : serverResult.errors;
