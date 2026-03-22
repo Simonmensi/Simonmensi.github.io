@@ -1,36 +1,121 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Simon Lei — Portfolio
 
-## Getting Started
+Personal portfolio built with Next.js 16 (App Router), TypeScript, Tailwind CSS,
+and PostgreSQL. Server Actions handle lead capture; SST deploys the app to AWS
+Lambda + CloudFront.
 
-First, run the development server:
+## Prerequisites
+
+- Node.js 20+
+- PostgreSQL 15+ (local or remote)
+
+## Local Setup
+
+```bash
+# 1. Install dependencies
+npm install
+
+# 2. Generate the Prisma client
+npx prisma generate
+
+# 3. Create your .env file
+cp .env.example .env
+# Then edit .env with your local PostgreSQL credentials
+```
+
+### Environment Variables
+
+Create a `.env` file in the project root with the following keys:
+
+| Key | Description | Example |
+|---|---|---|
+| `DATABASE_URL` | PostgreSQL connection string | `postgresql://simon_user:simon_pass@localhost:5432/simon_db?schema=public` |
+| `ADMIN_USER` | Username for the `/admin/*` routes | `admin` |
+| `ADMIN_PASS` | Password for the `/admin/*` routes | `changeme` |
+
+### Database Migration
+
+```bash
+# Apply the Prisma schema to your local database
+npx prisma migrate dev --name init
+```
+
+> Your PostgreSQL user needs `CREATEDB` permission (Prisma uses a shadow database
+> during migration). Grant it with:
+> `ALTER USER your_user CREATEDB;`
+
+### Running Locally
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Admin Dashboard
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The `/admin/leads` endpoint returns all captured leads as JSON, protected by
+HTTP Basic Auth.
 
-## Learn More
+```bash
+# Without credentials → 401 Unauthorized
+curl http://localhost:3000/admin/leads/
 
-To learn more about Next.js, take a look at the following resources:
+# With credentials → 200 + JSON array
+curl -u admin:changeme http://localhost:3000/admin/leads/
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Credentials are set via `ADMIN_USER` and `ADMIN_PASS` in `.env`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Testing
 
-## Deploy on Vercel
+```bash
+npm run test           # Run all tests once
+npm run test:watch     # Watch mode
+npm run test:coverage  # With coverage report
+npm run lint           # ESLint
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Project Structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+app/
+  contact/
+    _actions.ts        # Server Action — saves lead to PostgreSQL
+    page.tsx           # Contact / lead capture page
+  admin/
+    leads/route.ts     # GET endpoint — returns all leads (auth required)
+components/
+  contact/
+    VCardForm.tsx      # Lead capture form (calls Server Action)
+    QrPanel.tsx        # QR code display panel
+    ThankYouMessage.tsx
+lib/
+  db.ts                # Singleton PrismaClient (Lambda-safe)
+  generate-vcard.ts    # vCard builder + browser download
+  vcard-data.ts        # Simon's contact data
+prisma/
+  schema.prisma        # Lead model
+middleware.ts          # Basic Auth guard for /admin/*
+sst.config.ts          # AWS deployment config (SST Ion)
+```
+
+## Deployment (AWS via SST)
+
+The app deploys to AWS Lambda + CloudFront using [SST Ion](https://sst.dev).
+
+```bash
+# Set secrets (one-time per stage)
+npx sst secret set DATABASE_URL "postgresql://..."
+npx sst secret set ADMIN_USER "admin"
+npx sst secret set ADMIN_PASS "your-secure-password"
+
+# Deploy
+npx sst deploy --stage prod
+
+# Remove all resources
+npx sst remove --stage prod
+```
+
+SST provisions Lambda functions, a CloudFront distribution, and an S3 bucket
+automatically. The PostgreSQL database is external (Neon, Supabase, or AWS RDS).

@@ -21,13 +21,10 @@ export async function saveLead(
     phone: (formData.get("phone") as string) ?? "",
   };
 
-  console.log("[saveLead] Received:", raw);
-
   const result = leadSchema.safeParse(raw);
 
   if (!result.success) {
     const fieldErrors = result.error.flatten().fieldErrors;
-    console.log("[saveLead] Validation failed:", fieldErrors);
     return {
       success: false,
       errors: {
@@ -38,16 +35,14 @@ export async function saveLead(
   }
 
   try {
-    const lead = await db.lead.create({
+    await db.lead.create({
       data: {
         name: result.data.name.trim(),
         phone: result.data.phone.trim(),
       },
     });
-    console.log("[saveLead] Inserted:", lead.id);
     return { success: true };
-  } catch (error) {
-    console.error("[saveLead] DB error:", error);
+  } catch {
     return {
       success: false,
       errors: { name: "Something went wrong. Please try again." },
