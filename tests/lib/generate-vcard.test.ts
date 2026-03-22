@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { buildVCardString, downloadVCard, saveLead } from "@/lib/generate-vcard";
+import { buildVCardString, downloadVCard } from "@/lib/generate-vcard";
 import type { ContactData } from "@/lib/vcard-data";
 
 const mockData: ContactData = {
@@ -114,41 +114,5 @@ describe("downloadVCard()", () => {
     downloadVCard("BEGIN:VCARD\r\nEND:VCARD", "simon-lei.vcf");
 
     expect(capturedAnchor!.download).toBe("simon-lei.vcf");
-  });
-});
-
-describe("saveLead()", () => {
-  beforeEach(() => {
-    (window.localStorage.clear as ReturnType<typeof vi.fn>)();
-    vi.clearAllMocks();
-  });
-
-  it("creates a new array when localStorage is empty", () => {
-    saveLead({ name: "Alice", phone: "+65 1234", submittedAt: "2026-03-18T00:00:00Z" });
-
-    expect(window.localStorage.setItem).toHaveBeenCalledTimes(1);
-    const stored = JSON.parse((window.localStorage.setItem as ReturnType<typeof vi.fn>).mock.calls[0][1]);
-    expect(stored).toHaveLength(1);
-    expect(stored[0].name).toBe("Alice");
-  });
-
-  it("appends to existing leads", () => {
-    (window.localStorage.getItem as ReturnType<typeof vi.fn>).mockReturnValue(
-      JSON.stringify([{ name: "Bob", phone: "+65 0000", submittedAt: "2026-01-01T00:00:00Z" }]),
-    );
-
-    saveLead({ name: "Alice", phone: "+65 1234", submittedAt: "2026-03-18T00:00:00Z" });
-
-    const stored = JSON.parse((window.localStorage.setItem as ReturnType<typeof vi.fn>).mock.calls[0][1]);
-    expect(stored).toHaveLength(2);
-    expect(stored[1].name).toBe("Alice");
-  });
-
-  it("uses the correct localStorage key", () => {
-    saveLead({ name: "Alice", phone: "+65 1234", submittedAt: "2026-03-18T00:00:00Z" });
-    expect(window.localStorage.setItem).toHaveBeenCalledWith(
-      "simonmensi_leads",
-      expect.any(String),
-    );
   });
 });

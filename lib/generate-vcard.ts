@@ -94,41 +94,4 @@ export function downloadVCard(vcfString: string, filename: string): void {
   URL.revokeObjectURL(url);
 }
 
-/**
- * Lead record saved to `localStorage` when a visitor submits the contact form.
- */
-export interface LeadRecord {
-  /** The visitor's name as entered in the form. */
-  name: string;
-  /** The visitor's phone number as entered in the form. */
-  phone: string;
-  /** ISO 8601 timestamp of when the form was submitted. */
-  submittedAt: string;
-}
 
-/** localStorage key used to persist the leads array. */
-const LEADS_STORAGE_KEY = "simonmensi_leads";
-
-/**
- * Appends a new {@link LeadRecord} to the `localStorage` leads array.
- *
- * Reads the existing array, pushes the new record, and writes back.
- * Safe to call on first use (no existing key) — initialises with an
- * empty array automatically.
- *
- * @param lead - The {@link LeadRecord} to persist.
- * @returns `void`
- *
- * @example
- * ```ts
- * import { saveLead } from "@/lib/generate-vcard";
- *
- * saveLead({ name: "Alice", phone: "+1234567890", submittedAt: new Date().toISOString() });
- * ```
- */
-export function saveLead(lead: LeadRecord): void {
-  const existing = localStorage.getItem(LEADS_STORAGE_KEY);
-  const leads: LeadRecord[] = existing ? (JSON.parse(existing) as LeadRecord[]) : [];
-  leads.push(lead);
-  localStorage.setItem(LEADS_STORAGE_KEY, JSON.stringify(leads));
-}

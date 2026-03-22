@@ -44,7 +44,12 @@ export function NavItem({ link, pathname, onClick }: Props) {
 
   if (link.cta) {
     return (
-      <Button href={link.href} variant="primary" size="sm">
+      <Button
+        href={link.disabled ? undefined : link.href}
+        variant="primary"
+        size="sm"
+        disabled={link.disabled}
+      >
         {link.label}
       </Button>
     );

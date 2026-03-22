@@ -115,7 +115,7 @@ export interface CvData {
 export const CV: CvData = {
   name: "LEI NUOZHEN",
   email: "Simon68562776@outlook.com",
-  phone: "+65 80385655",
+  phone: "",
 
   summary:
     "Aspiring Systems Analyst and Data Science practitioner currently pursuing a Graduate Diploma at NUS-ISS, " +
