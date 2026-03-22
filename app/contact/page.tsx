@@ -57,8 +57,7 @@ export default function ContactPage() {
 
                 {/* Privacy note */}
                 <p className="mt-6 text-center text-xs text-blue-900/40 dark:text-blue-300/40">
-                  Your details are stored locally on this device only.
-                  No data is sent to any server.
+                  Your details are stored securely and used only to follow up.
                 </p>
               </>
             )}
