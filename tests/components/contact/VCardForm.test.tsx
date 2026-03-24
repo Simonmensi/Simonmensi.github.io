@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { VCardForm } from "@/components/contact/VCardForm";
+import { VCardForm, validate } from "@/components/contact/VCardForm";
 
 vi.mock("@/lib/generate-vcard", () => ({
   buildVCardString: vi.fn(() => "BEGIN:VCARD\r\nEND:VCARD"),
@@ -12,13 +12,16 @@ vi.mock("@/lib/vcard-data", () => ({
   SIMON_VCARD_DATA: { fullName: "Test" },
 }));
 
-vi.mock("@/app/contact/_actions", () => ({
-  saveLead: vi.fn(),
-}));
+// Mock global fetch so the form does not make real HTTP calls in tests
+const mockFetch = vi.fn();
+vi.stubGlobal("fetch", mockFetch);
 
 describe("VCardForm", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    mockFetch.mockResolvedValue({
+      json: async () => ({ success: true }),
+    });
   });
 
   it("shows both error messages on empty submit", async () => {
@@ -31,14 +34,10 @@ describe("VCardForm", () => {
     expect(screen.getByText("Phone number is required.")).toBeTruthy();
   });
 
-  it("shows name too short error", async () => {
-    const user = userEvent.setup();
-    render(<VCardForm onSuccess={vi.fn()} />);
-
-    await user.type(screen.getByLabelText("Your Name"), "A");
-    await user.click(screen.getByRole("button", { name: /Get.*Contact/i }));
-
-    expect(screen.getByText("Name must be at least 2 characters.")).toBeTruthy();
+  it("validate() rejects name shorter than 2 characters", () => {
+    const errors = validate({ name: "A", phone: "123" });
+    expect(errors.name).toBe("Name must be at least 2 characters.");
+    expect(errors.phone).toBeUndefined();
   });
 
   it("clears field error when user types", async () => {
