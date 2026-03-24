@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useEffect, useActionState, useTransition } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { VCARD_FILENAME, OWNER_NAME } from "@/constants";
 import { buildVCardString, downloadVCard } from "@/lib/generate-vcard";
 import { SIMON_VCARD_DATA } from "@/lib/vcard-data";
-import { saveLead, type ActionResult } from "@/app/contact/_actions";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "";
 
 export interface FormValues {
   name: string;
@@ -42,32 +43,20 @@ const INPUT_BASE =
 const INPUT_VALID = "border-blue-900/20 dark:border-blue-700/40 bg-white dark:bg-gray-900 hover:border-blue-900/40 dark:hover:border-blue-500/60";
 const INPUT_ERROR = "border-red-400 bg-red-50 dark:bg-red-900/20";
 
-const INITIAL_STATE: ActionResult = { success: false, errors: {} };
-
 export function VCardForm({ onSuccess }: Props) {
   const [values, setValues] = useState<FormValues>({ name: "", phone: "" });
   const [clientErrors, setClientErrors] = useState<FormErrors>({});
-  const [serverResult, formAction] = useActionState<
-    ActionResult,
-    FormData
-  >(saveLead, INITIAL_STATE);
-  const [isPending, startTransition] = useTransition();
-
-  // Handle successful server action — trigger vCard download and notify parent
-  useEffect(() => {
-    if (serverResult.success) {
-      downloadVCard(buildVCardString(SIMON_VCARD_DATA), VCARD_FILENAME);
-      onSuccess(values.name.trim());
-    }
-  }, [serverResult.success]); // eslint-disable-line react-hooks/exhaustive-deps
+  const [serverErrors, setServerErrors] = useState<FormErrors>({});
+  const [isLoading, setIsLoading] = useState(false);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
     setValues((prev) => ({ ...prev, [name]: value }));
     setClientErrors((prev) => ({ ...prev, [name]: undefined }));
+    setServerErrors((prev) => ({ ...prev, [name]: undefined }));
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const validationErrors = validate(values);
     if (Object.keys(validationErrors).length > 0) {
@@ -75,15 +64,34 @@ export function VCardForm({ onSuccess }: Props) {
       return;
     }
     setClientErrors({});
-    const formData = new FormData();
-    formData.set("name", values.name.trim());
-    formData.set("phone", values.phone.trim());
-    startTransition(() => {
-      formAction(formData);
-    });
+    setServerErrors({});
+    setIsLoading(true);
+
+    try {
+      const response = await fetch(`${API_URL}/api/leads`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: values.name.trim(),
+          phone: values.phone.trim(),
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        downloadVCard(buildVCardString(SIMON_VCARD_DATA), VCARD_FILENAME);
+        onSuccess(values.name.trim());
+      } else {
+        setServerErrors(data.errors || { name: "Something went wrong." });
+      }
+    } catch {
+      setServerErrors({ name: "Network error. Please try again." });
+    } finally {
+      setIsLoading(false);
+    }
   }
 
-  const serverErrors = serverResult.success ? {} : serverResult.errors;
   const errors = { ...clientErrors, ...serverErrors };
 
   return (
@@ -122,7 +130,7 @@ export function VCardForm({ onSuccess }: Props) {
         )}
       </div>
 
-      <Button variant="primary" size="md" type="submit" isLoading={isPending} className="mt-2 w-full justify-center">
+      <Button variant="primary" size="md" type="submit" isLoading={isLoading} className="mt-2 w-full justify-center">
         Get {OWNER_NAME}&apos;s Contact
       </Button>
     </form>

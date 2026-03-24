@@ -45,3 +45,6 @@ next-env.d.ts
 
 # sst
 .sst
+
+# static build temp
+.static-build-temp
